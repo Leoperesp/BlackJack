@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Blackjack - Ronda {{ round }}</title>
+    <style>
+        body {
+            background: #23272b;
+            color: #f1f1f1;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .card {
+            display: inline-block;
+            border: 1.5px solid #333;
+            border-radius: 12px;
+            padding: 12px 18px;
+            margin: 8px;
+            background: #57575700;
+            font-size: 1.4em;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        .cards-row {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+        }
+        img.card-img {
+            height: 140px;
+
+            display: block;
+            margin: 0 auto;
+        }
+        h1, h2, h3, p {
+            text-align: center;
+        }
+        form {
+            display: inline-block;
+            margin: 0 8px;
+        }
+        .btn-pedir {
+            background-color: orange;
+            color: #fff;
+            font-size: 1.3em;
+            padding: 16px 36px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 8px 0;
+            transition: background 0.2s;
+        }
+        .btn-pedir:hover {
+            background-color: #ff9800;
+        }
+        .btn-plantarse {
+            background-color: #00bfff;
+            color: #fff;
+            font-size: 1.3em;
+            padding: 16px 36px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 8px 0;
+            transition: background 0.2s;
+        }
+        .btn-plantarse:hover {
+            background-color: #009acd;
+        }
+        ul {
+        text-align: center;
+        list-style: none;
+        padding: 0;
+        /* Colores para historial */
+    }
+    .hist-usuario {
+        color: #1fa055;
+        font-weight: bold;
+    }
+    .hist-pc {
+        color: #b22222;
+        font-weight: bold;
+    }
+    </style>
+</head>
+<body>
+    <h1>Blackjack</h1>
+    <h2 style="margin-top: 0; margin-bottom: 32px; font-weight: normal; font-size: 1.5em; color: #b0e0ff;">Ronda {{ round }} de 3</h2>
+    <h2>Tu mano:</h2>
+    <div class="cards-row">
+        {% for card in player_hand %}
+            <span class="card">
+                {% set palo = card[1].replace('ó','o').replace('é','e') %}
+                <img class="card-img" src="{{ url_for('static', filename='cartas/' + card[0] + '_' + palo + '.png') }}" alt="{{ card[0] }} de {{ card[1] }}">
+            </span>
+        {% endfor %}
+    </div>
+    <h2>Mano del PC:</h2>
+    <div class="cards-row">
+        {% for card in pc_hand %}
+            <span class="card">
+                {% if card[0] == '?' %}
+                    <img class="card-img" src="{{ url_for('static', filename='cartas/back.png') }}" alt="Carta oculta">
+                {% else %}
+                    {% set palo = card[1].replace('ó','o').replace('é','e') %}
+                    <img class="card-img" src="{{ url_for('static', filename='cartas/' + card[0] + '_' + palo + '.png') }}" alt="{{ card[0] }} de {{ card[1] }}">
+                {% endif %}
+            </span>
+        {% endfor %}
+    </div>
+    <p>Puntaje Jugador: {{ player_score }} | Puntaje PC: {{ pc_score }}</p>
+    <form action="/hit" method="get" style="display:inline;">
+        <button type="submit" class="btn-pedir">Pedir carta</button>
+    </form>
+    <form action="/stand" method="get" style="display:inline;">
+        <button type="submit" class="btn-plantarse">Plantarse</button>
+    </form>
+    <h3>Historial:</h3>
+    <ul>
+        {% for h in history %}
+            {% if h.winner == 'Usuario' or h.winner == 'Jugador' %}
+                <li class="hist-usuario">Ronda {{ h.round }}: Jugador {{ h.player }} - PC {{ h.pc }} | Ganador: {{ h.winner }}</li>
+            {% elif h.winner == 'PC' or h.winner == 'Pc' or h.winner == 'pc' %}
+                <li class="hist-pc">Ronda {{ h.round }}: Jugador {{ h.player }} - PC {{ h.pc }} | Ganador: {{ h.winner }}</li>
+            {% else %}
+                <li>Ronda {{ h.round }}: Jugador {{ h.player }} - PC {{ h.pc }} | Ganador: {{ h.winner }}</li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+</body>
+</html>
