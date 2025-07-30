@@ -1,0 +1,77 @@
+body {
+    background: #23272b;
+    color: #f1f1f1;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+.card {
+    display: inline-block;
+    border: 1.5px solid #333;
+    border-radius: 12px;
+    padding: 12px 18px;
+    margin: 8px;
+    background: #57575700;
+    font-size: 1.4em;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    width: 100px;
+    height: 150px;
+}
+.cards-row {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+}
+img.card-img {
+    height: 140px;
+    display: block;
+    margin: 0 auto;
+}
+h1, h2, h3, p {
+    text-align: center;
+}
+form {
+    display: inline-block;
+    margin: 0 8px;
+}
+.btn-pedir {
+    background-color: orange;
+    color: #fff;
+    font-size: 1.3em;
+    padding: 16px 36px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin: 8px 0;
+    transition: background 0.2s;
+}
+.btn-pedir:hover {
+    background-color: #ff9800;
+}
+.btn-plantarse {
+    background-color: #00bfff;
+    color: #fff;
+    font-size: 1.3em;
+    padding: 16px 36px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin: 8px 0;
+    transition: background 0.2s;
+}
+.btn-plantarse:hover {
+    background-color: #009acd;
+}
+ul {
+    text-align: center;
+    list-style: none;
+    padding: 0;
+}
+.hist-usuario {
+    color: #1fa055;
+    font-weight: bold;
+}
+.hist-pc {
+    color: #b22222;
+    font-weight: bold;
+}

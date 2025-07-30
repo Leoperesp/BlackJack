@@ -46,13 +46,22 @@ def start():
 
 @app.route('/game')
 def game():
+    pc_reveal = session.get('pc_reveal', False)
+    pc_animating = session.get('pc_animating', False)
+    last_winner = session.pop('last_winner', None)
+    if pc_reveal:
+        pc_hand = session['pc_hand']
+    else:
+        pc_hand = [session['pc_hand'][0], ('?', '?')]
     return render_template('game.html',
         player_hand=session['player_hand'],
-        pc_hand=[session['pc_hand'][0], ('?', '?')],
+        pc_hand=pc_hand,
         round=session['round'],
         player_score=session['player_score'],
         pc_score=session['pc_score'],
-        history=session['history'])
+        history=session['history'],
+        pc_animating=pc_animating,
+        last_winner=last_winner)
 
 @app.route('/hit')
 def hit():
@@ -67,10 +76,25 @@ def hit():
 
 @app.route('/stand')
 def stand():
+    session['pc_reveal'] = True
+    session['pc_animating'] = True
+    return redirect(url_for('pc_turn'))
+
+
+# Nueva ruta para animar el turno del PC
+@app.route('/pc_turn')
+def pc_turn():
     deck = session['deck']
     pc_hand = session['pc_hand']
-    while hand_value(pc_hand) < 17:
+    # Si el PC debe pedir carta, la pide y vuelve a mostrar la página
+    if hand_value(pc_hand) < 17:
         pc_hand.append(deal_card(deck))
+        session['pc_hand'] = pc_hand
+        session['deck'] = deck
+        session['pc_reveal'] = True
+        session['pc_animating'] = True
+        return redirect(url_for('game'))
+    # Si ya no pide más, calcular resultado
     session['pc_hand'] = pc_hand
     player_val = hand_value(session['player_hand'])
     pc_val = hand_value(pc_hand)
@@ -94,6 +118,8 @@ def stand():
         session['player_score'] += 1
     elif winner == 'PC':
         session['pc_score'] += 1
+    session['last_winner'] = winner
+    session['pc_animating'] = False
 
     # Terminar si alguien llega a 2 victorias
     if session['player_score'] == 2 or session['pc_score'] == 2 or session['round'] >= 3:
@@ -105,6 +131,7 @@ def stand():
     session['player_hand'] = [deal_card(deck), deal_card(deck)]
     session['pc_hand'] = [deal_card(deck), deal_card(deck)]
     session['round'] += 1
+    session['pc_reveal'] = False
     return redirect(url_for('game'))
 
 @app.route('/result')

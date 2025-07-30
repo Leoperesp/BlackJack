@@ -1,0 +1,28 @@
+body {
+    background: #23272b;
+    color: #f1f1f1;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+h1 {
+    margin-top: 80px;
+    font-size: 2.5em;
+}
+form {
+    margin-top: 40px;
+}
+button {
+    background: #ffd700;
+    color: #23272b;
+    border: none;
+    border-radius: 8px;
+    padding: 18px 40px;
+    font-size: 1.3em;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    transition: background 0.2s;
+}
+button:hover {
+    background: #e6c200;
+}

@@ -3,65 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Resultado Blackjack</title>
-    <style>
-        body {
-            background: #23272b;
-            color: #f1f1f1;
-            font-family: Arial, sans-serif;
-            text-align: center;
-        }
-        .card-img {
-            height: 100px;
-            display: inline-block;
-            margin: 0 2px;
-        }
-        ul {
-            text-align: center;
-            list-style: none;
-            padding: 0;
-        }
-        li {
-            margin-bottom: 18px;
-        }
-        h1 {
-            margin-top: 60px;
-            font-size: 2.5em;
-        }
-        h2 {
-            font-size: 2em;
-            margin-bottom: 18px;
-        }
-        h3 {
-            font-size: 1.3em;
-            margin-top: 32px;
-        }
-        p {
-            font-size: 1.1em;
-            margin-bottom: 18px;
-        }
-        a {
-            display: inline-block;
-            margin-top: 32px;
-            background: #ffd700;
-            color: #23272b;
-            border: none;
-            border-radius: 8px;
-            padding: 14px 32px;
-            font-size: 1.1em;
-            font-weight: bold;
-            text-decoration: none;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-            transition: background 0.2s;
-        }
-        a:hover {
-            background: #e6c200;
-            color: #23272b;
-        }
-    span {
-        font-size: 1.15em;
-        color: #e0e0e0;
-    }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='result.css') }}">
 </head>
 <body>
     <h1>Resultado Final</h1>
