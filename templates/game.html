@@ -7,11 +7,72 @@
 </head>
 <body>
     <h1>Blackjack</h1>
+    <h2>Jugador: {{ player_name }}</h2>
     <h2 style="margin-top: 0; margin-bottom: 32px; font-weight: normal; font-size: 1.5em; color: #b0e0ff;">Ronda {{ round }} de 3</h2>
     {% if last_winner %}
-    <script>
-        alert('Ganador de la ronda: {{ last_winner }}');
-    </script>
+    <div id="winner-modal" class="modal-overlay">
+        <div class="modal-content">
+            {% if last_winner in ['Empate', 'empate', 'Draw', 'draw'] %}
+                <h2>Empate</h2>
+                <div class="modal-cards">
+                    <div>
+                        <h3>Cartas Jugador</h3>
+                        <div class="cards-row">
+                            {% for card in history[-1].player_hand %}
+                                <span class="card">
+                                    {% set palo = card[1].replace('ó','o').replace('é','e') %}
+                                    <img class="card-img" src="{{ url_for('static', filename='cartas/' + card[0] + '_' + palo + '.png') }}" alt="{{ card[0] }} de {{ card[1] }}">
+                                </span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div>
+                        <h3>Cartas PC</h3>
+                        <div class="cards-row">
+                            {% for card in history[-1].pc_hand %}
+                                <span class="card">
+                                    {% set palo = card[1].replace('ó','o').replace('é','e') %}
+                                    <img class="card-img" src="{{ url_for('static', filename='cartas/' + card[0] + '_' + palo + '.png') }}" alt="{{ card[0] }} de {{ card[1] }}">
+                                </span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <h2>Ganador de la ronda: {{ last_winner }}</h2>
+                <div class="modal-cards">
+                    {% if last_winner in ['Usuario', 'Jugador'] %}
+                    <div>
+                        <h3>Cartas Jugador</h3>
+                        <div class="cards-row">
+                            {% for card in history[-1].player_hand %}
+                                <span class="card">
+                                    {% set palo = card[1].replace('ó','o').replace('é','e') %}
+                                    <img class="card-img" src="{{ url_for('static', filename='cartas/' + card[0] + '_' + palo + '.png') }}" alt="{{ card[0] }} de {{ card[1] }}">
+                                </span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% elif last_winner in ['PC', 'Pc', 'pc'] %}
+                    <div>
+                        <h3>Cartas PC</h3>
+                        <div class="cards-row">
+                            {% for card in history[-1].pc_hand %}
+                                <span class="card">
+                                    {% set palo = card[1].replace('ó','o').replace('é','e') %}
+                                    <img class="card-img" src="{{ url_for('static', filename='cartas/' + card[0] + '_' + palo + '.png') }}" alt="{{ card[0] }} de {{ card[1] }}">
+                                </span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            {% endif %}
+            <form action="/game" method="get">
+                <button type="submit" class="btn-continuar">Continuar</button>
+            </form>
+        </div>
+    </div>
     {% endif %}
     {% if pc_animating %}
     <script>

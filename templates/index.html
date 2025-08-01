@@ -7,7 +7,9 @@
 </head>
 <body>
     <h1>Bienvenido a Blackjack</h1>
-    <form action="/start" method="get">
+    <form action="/start" method="post">
+        <label for="player_name" class="player-label" placeholder="Escribe tu Nombre" required>Escribe tu Nombre:</label>
+        <input type="text" id="player_name" name="player_name" required class="player-input">
         <button type="submit">Comenzar Juego</button>
     </form>
 </body>

@@ -1,3 +1,25 @@
+/* Estilos para el input y label del nombre del jugador */
+.player-label {
+    font-size: 1.2em;
+    display: block;
+    margin-bottom: 8px;
+}
+.player-input {
+    font-size: 1.2em;
+    padding: 8px;
+    width: 25%;
+    margin-bottom: 16px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    background: #424242;
+}
+.player-input::placeholder {
+    color: #ffd700;
+    font-size: 1.1em;
+    opacity: 1;
+    font-weight: bold;
+}
 body {
     background: #23272b;
     color: #f1f1f1;
@@ -22,6 +44,9 @@ button {
     cursor: pointer;
     box-shadow: 0 2px 8px rgba(0,0,0,0.2);
     transition: background 0.2s;
+    display: block;
+    margin: 0 auto;
+    margin-top: 12px;
 }
 button:hover {
     background: #e6c200;

@@ -8,13 +8,13 @@
 <body>
     <h1>Resultado Final</h1>
     <h2>{{ final_winner }}</h2>
-    <p>Puntaje Jugador: {{ player_score }} | Puntaje PC: {{ pc_score }}</p>
+    <p>Puntaje {{ player_name }}: {{ player_score }} | Puntaje PC: {{ pc_score }}</p>
     <h3>Historial de rondas:</h3>
     <ul>
         {% for h in history %}
             <li>
                 <strong>Ronda {{ h.round }}:</strong> <br>
-                <span>Jugador ({{ h.player }}): </span>
+                <span>{{ player_name }} ({{ h.player }}): </span>
                 {% if h.player_hand %}
                     {% for card in h.player_hand %}
                         {% set palo = card[1].replace('ó','o').replace('é','e') %}

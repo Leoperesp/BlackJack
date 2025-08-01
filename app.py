@@ -32,8 +32,10 @@ def index():
     session.clear()
     return render_template('index.html')
 
-@app.route('/start')
+@app.route('/start', methods=['POST'])
 def start():
+    player_name = request.form.get('player_name', 'Jugador')
+    session['player_name'] = player_name
     deck = shuffle_deck(create_deck())
     session['deck'] = deck
     session['player_hand'] = [deal_card(deck), deal_card(deck)]
@@ -61,7 +63,8 @@ def game():
         pc_score=session['pc_score'],
         history=session['history'],
         pc_animating=pc_animating,
-        last_winner=last_winner)
+        last_winner=last_winner,
+        player_name=session.get('player_name', 'Jugador'))
 
 @app.route('/hit')
 def hit():
@@ -146,7 +149,8 @@ def result():
         history=session['history'],
         player_score=session['player_score'],
         pc_score=session['pc_score'],
-        final_winner=final_winner)
+        final_winner=final_winner,
+        player_name=session.get('player_name', 'Jugador'))
 
 if __name__ == '__main__':
     app.run(debug=True)
